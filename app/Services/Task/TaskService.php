@@ -6,6 +6,8 @@ use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Contracts\TaskRepositoryInterface;
 use Carbon\Carbon;
+use App\Events\TaskCompleted;
+use App\Events\TaskCreated;
 
 class TaskService
 {
@@ -27,7 +29,11 @@ class TaskService
         $data['company_id'] = $user->company_id;
         $data['user_id'] = $user->id;
 
-        return $this->tasks->create($data);
+        $task = $this->tasks->create($data);
+
+        event(new TaskCreated($task));
+
+        return $task;
     }
 
     public function show(int $id): ?Task
@@ -53,6 +59,10 @@ class TaskService
             'completed_at' => Carbon::now()
         ];
 
-        return $this->update($task, $payload);
+        $task = $this->update($task, $payload);
+
+        event(new TaskCompleted($task));
+
+        return $task;
     }
 }

@@ -56,7 +56,7 @@ class TaskController extends Controller
         return response()->json(['message' => 'Task deleted']);
     }
 
-    public function completed(Task $task)
+    public function complete(Task $task)
     {
         $this->authorize('complete', $task);
         $task = $this->service->complete($task);
