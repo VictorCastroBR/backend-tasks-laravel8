@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\Task;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Repositories\Contracts\TaskRepositoryInterface;
+use Illuminate\Database\Eloquent\Builder;
 
 class TaskRepository implements TaskRepositoryInterface
 {
@@ -51,5 +52,23 @@ class TaskRepository implements TaskRepositoryInterface
     public function delete(Task $task): void
     {
         $task->delete();
+    }
+
+    public function baseQueryForExport(array $filters, int $companyId): Builder
+    {
+        $q = Task::query()
+        ->where('company_id', $companyId) // <-- força o tenant aqui
+        ->with('user:id,name');
+
+        if (!empty($filters['status']))   $q->where('status', $filters['status']);
+        if (!empty($filters['priority'])) $q->where('priority', $filters['priority']);
+        if (!empty($filters['search'])) {
+            $q->where(function ($w) use ($filters) {
+                $w->where('title','like','%'.$filters['search'].'%')
+                ->orWhere('description','like','%'.$filters['search'].'%');
+            });
+        }
+
+        return $q->orderBy('id');
     }
 }

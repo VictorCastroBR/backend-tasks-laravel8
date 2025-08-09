@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\ExportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +37,10 @@ Route::middleware('auth:api')->prefix('/tasks')->group(function () {
     Route::put('/{task}',    [TaskController::class,'update']);
     Route::delete('/{task}', [TaskController::class,'destroy']);
     Route::post('/{task}/complete', [TaskController::class,'complete']);
+});
+
+Route::middleware('auth:api')->prefix('export')->group(function () {
+    Route::post('/', [ExportController::class, 'tasks']);
+    Route::get('/{export}', [ExportController::class, 'show']);
+    Route::get('/{export}/download', [ExportController::class, 'download'])->name('exports.download');
 });
