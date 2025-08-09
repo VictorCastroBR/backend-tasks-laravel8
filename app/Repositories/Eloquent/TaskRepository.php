@@ -32,7 +32,7 @@ class TaskRepository implements TaskRepositoryInterface
         return $q->paginate($perPage);
     }
 
-    public function find(int $id): Task|null
+    public function find(int $id): Task
     {
         return Task::with('user:id,name')->find($id);
     }

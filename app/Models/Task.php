@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use APP\Scopes\CompanyScope;
+use App\Scopes\CompanyScope;
 
 class Task extends Model
 {

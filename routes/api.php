@@ -4,6 +4,7 @@ use App\Http\Controllers\CompanyUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,13 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/company/users', [CompanyUserController::class, 'store']);
+});
+
+Route::middleware('auth:api')->prefix('/tasks')->group(function () {
+    Route::get('/',           [TaskController::class,'index']);
+    Route::post('/',          [TaskController::class,'store']);
+    Route::get('/{task}',    [TaskController::class,'show']);
+    Route::put('/{task}',    [TaskController::class,'update']);
+    Route::delete('/{task}', [TaskController::class,'destroy']);
+    Route::post('/{task}/complete', [TaskController::class,'complete']);
 });

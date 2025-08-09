@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Company;
 use App\Models\User;
-use Illuminte\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;
 
 class BootstrapCommand extends Command
 {
@@ -60,7 +60,7 @@ class BootstrapCommand extends Command
             'company_id' => $company->id,
             'name' => $adminName,
             'email' => $adminEmail,
-            'password' => $password,
+            'password' => Hash::make($password),
             'is_admin' => true
         ]);
 
