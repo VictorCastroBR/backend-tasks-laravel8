@@ -17,7 +17,8 @@ RUN composer install --no-interaction --prefer-dist --no-scripts
 
 COPY . .
 
-RUN chown -R www-data:www-data storage bootstrap/cache || true
+RUN mkdir -p storage/logs storage/framework/{sessions,views,cache} \
+    && chown -R www-data:www-data storage bootstrap/cache
 
 EXPOSE 9000
 CMD ["php-fpm"]
