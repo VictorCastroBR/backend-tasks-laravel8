@@ -1,0 +1,49 @@
+services:
+  app:
+    build: .
+    container_name: laravel_app
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - db
+
+  web:
+    image: nginx:1.25-alpine
+    container_name: laravel_web
+    ports:
+      - "8081:80"
+    volumes:
+      - ./:/var/www/html:ro
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.0
+    container_name: laravel_db
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+      MYSQL_ROOT_PASSWORD: root
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  queue:
+    build: .
+    container_name: laravel_queue
+    working_dir: /var/www/html
+    command: php artisan queue:work --queue=default --tries=3 --timeout=90
+    restart: unless-stopped
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - app
+      - db
+
+volumes:
+  dbdata:
