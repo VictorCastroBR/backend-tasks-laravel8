@@ -24,10 +24,10 @@ class TaskIndexRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => ['sometimes', 'in:pending,doing,done'],
-            'priority' => ['sometimes', 'in:low,medium,high'],
-            'search' => ['sometimes', 'string', 'max:150'],
-            'per_page' => ['sometimes', 'integer', 'between:1,100']
+            'status' => ['nullable', 'in:pending,doing,done'],
+            'priority' => ['nullable', 'in:low,medium,high'],
+            'search' => ['nullable', 'string', 'max:150'],
+            'per_page' => ['nullable', 'integer', 'between:1,100']
         ];
     }
 }

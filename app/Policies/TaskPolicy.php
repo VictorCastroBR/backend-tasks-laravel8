@@ -26,11 +26,11 @@ class TaskPolicy
     }
     public function update(User $user, Task $task): bool
     {
-        return $user->company_id === $task->comapny_id;
+        return $user->company_id === $task->company_id;
     }
     public function delete(User $user, Task $task): bool
     {
-        return $user->company_id === $task->comapny_id;
+        return $user->company_id === $task->company_id;
     }
     public function complete(User $user, Task $task): bool
     {

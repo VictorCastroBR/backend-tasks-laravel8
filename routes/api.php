@@ -39,7 +39,7 @@ Route::middleware('auth:api')->prefix('/tasks')->group(function () {
     Route::post('/{task}/complete', [TaskController::class,'complete']);
 });
 
-Route::middleware('auth:api')->prefix('export')->group(function () {
+Route::middleware('auth:api')->prefix('exports')->group(function () {
     Route::post('/', [ExportController::class, 'tasks']);
     Route::get('/{export}', [ExportController::class, 'show']);
     Route::get('/{export}/download', [ExportController::class, 'download'])->name('exports.download');
