@@ -12,11 +12,13 @@ class Export extends Model
     protected $table = 'exports';
 
     protected $fillable = [
+        'uuid',
         'company_id',
         'user_id',
         'status',
         'file_path',
-        'filters'
+        'filters',
+        'delivered_at'
     ];
 
     protected $casts = [

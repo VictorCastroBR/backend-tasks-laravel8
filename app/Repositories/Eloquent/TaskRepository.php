@@ -17,7 +17,7 @@ class TaskRepository implements TaskRepositoryInterface
             $q->where('status', $filters['status']);
         }
 
-        if (!empty($filter['priority'])) {
+        if (!empty($filters['priority'])) {
             $q->where('priority', $filters['priority']);
         }
 

@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 use App\Repositories\Contracts\TaskRepositoryInterface;
+use App\Mail\TasksExportReadyMail;
 use Throwable;
 
 class ExportTasksJob implements ShouldQueue
@@ -78,10 +80,17 @@ class ExportTasksJob implements ShouldQueue
 
             fclose($fp);
 
+            $frontend = rtrim(config('app.frontend_url', 'http://127.0.0.1:8080'), '/');
+            $deepLink = $frontend ? "{$frontend}/exports/{$export->uuid}" : null;
+
             $export->update([
                 'status'    => 'done',
                 'file_path' => $path,
+                'delivered_at' => now()
             ]);
+
+            Mail::to($export->user->email)->queue(new TasksExportReadyMail($export, $deepLink));
+
         } catch (Throwable $e) {
             if (is_resource($fp)) { fclose($fp); }
             $export->update(['status' => 'failed']);

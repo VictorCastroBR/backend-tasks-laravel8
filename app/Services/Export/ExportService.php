@@ -5,6 +5,7 @@ namespace App\Services\Export;
 use App\Models\Export;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Contracts\ExportRepositoryInterface;
+use Illuminate\Support\Str;
 
 class ExportService
 {
@@ -20,6 +21,7 @@ class ExportService
         $user = Auth::user();
 
         return $this->exports->create([
+            'uuid' => (string) Str::uuid(),
             'company_id' => $user->company_id,
             'user_id' => $user->id,
             'status' => 'queued',
