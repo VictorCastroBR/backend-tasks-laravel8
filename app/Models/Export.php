@@ -25,6 +25,11 @@ class Export extends Model
         'filters' => 'array'
     ];
 
+     public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
     public function company()
     {
         return $this->belongsTo(Company::class);
