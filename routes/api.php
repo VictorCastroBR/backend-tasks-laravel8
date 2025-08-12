@@ -26,8 +26,9 @@ Route::prefix('auth')->group(function () {
     Route::get('me',        [AuthController::class,'me'])->middleware('auth:api');
 });
 
-Route::middleware('auth:api')->group(function () {
-    Route::post('/company/users', [CompanyUserController::class, 'store']);
+Route::middleware('auth:api')->prefix('/company')->group(function () {
+    Route::get('/users', [CompanyUserController::class, 'index']);
+    Route::post('/users', [CompanyUserController::class, 'store']);
 });
 
 Route::middleware('auth:api')->prefix('/tasks')->group(function () {

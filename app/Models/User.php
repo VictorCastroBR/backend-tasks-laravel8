@@ -39,6 +39,11 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    public function scopeForCompany($query, int $companyId)
+    {
+        return $query->where('company_id', $companyId);
+    }
+
      public function getJWTIdentifier()
     {
         return $this->getKey();

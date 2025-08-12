@@ -2,10 +2,9 @@
 
 namespace App\Providers;
 
+
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use App\Policies\TaskPolicy;
-use App\Policies\ExportPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -15,9 +14,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
-        Task::class => TaskPolicy::class,
-        ExportPolicy::class => ExportPolicy::class
+        \App\Models\Task::class => \App\Policies\TaskPolicy::class,
+        \App\Models\Export::class => \App\Policies\ExportPolicy::class,
+        \App\Models\User::class => \App\Policies\UserPolicy::class
     ];
 
     /**

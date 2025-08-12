@@ -14,6 +14,12 @@ class CompanyUserService
         $this->users = $users;
     }
 
+    public function list(array $filters, int $perPage = 10)
+    {   
+        $companyId = Auth::user()->company_id;
+        return $this->users->paginate($companyId, $filters, $perPage);
+    }
+
     public function createUserInMyCompany(array $payload): User
     {
         $companyId = Auth::user()->company_id;

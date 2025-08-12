@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Company;
 use Illuminate\Http\Request;
-use illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;
 use illuminate\Validation\Rule;
 
 class AuthController extends Controller
@@ -14,7 +14,7 @@ class AuthController extends Controller
     {
         $data = $request->validate([
             'company_name' => ['required', 'string', 'max:150'],
-            'company_slug' => ['required', 'string', 'max:150', 'alpha_data', 'unique', 'slug'],
+            'company_slug' => ['required', 'string', 'max:150', 'alpha_dash', 'unique:companies,slug'],
             'name' => ['required', 'string', 'max:150'],
             'email' => ['required', 'string', 'max:150'],
             'password' => ['required', 'string', 'min:6']
