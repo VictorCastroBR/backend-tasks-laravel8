@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Task;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
+use App\Models\Task;
 
 class TaskStoreRequest extends FormRequest
 {
@@ -13,6 +15,7 @@ class TaskStoreRequest extends FormRequest
      */
     public function authorize()
     {
+        Gate::forUser($this->user())->authorize('viewAny', Task::class);
         return true;
     }
 

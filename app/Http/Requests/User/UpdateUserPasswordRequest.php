@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Task;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
-use App\Models\Task;
 
-class TaskIndexRequest extends FormRequest
+class UpdateUserPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +14,9 @@ class TaskIndexRequest extends FormRequest
      */
     public function authorize()
     {
-        Gate::forUser($this->user())->authorize('viewAny', Task::class);
+        $target = $this->route('user');
+
+        Gate::forUser($this->user())->authorize('update', $target);
         return true;
     }
 
@@ -25,12 +26,11 @@ class TaskIndexRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    {   
+        
+
         return [
-            'status' => ['nullable', 'in:pending,doing,done'],
-            'priority' => ['nullable', 'in:low,medium,high'],
-            'search' => ['nullable', 'string', 'max:150'],
-            'per_page' => ['nullable', 'integer', 'between:1,100']
+            'password' => ['required','string','min:6'],
         ];
     }
 }

@@ -20,20 +20,38 @@ class TaskPolicy
         //
     }
 
-    public function view(User $user, Task $task): bool
+    protected function sameCompany(User $u, Task $t): bool
     {
-        return $user->company_id === $task->company_id;
+        return (int) $u->company_id === (int) $t->company_id;
     }
-    public function update(User $user, Task $task): bool
+
+    public function viewAny(User $u): bool
     {
-        return $user->company_id === $task->company_id;
+        return !is_null($u->company_id);
     }
-    public function delete(User $user, Task $task): bool
+
+    public function create(User $u): bool
     {
-        return $user->company_id === $task->company_id;
+        return !is_null($u->company_id);
     }
-    public function complete(User $user, Task $task): bool
+
+     public function view(User $u, Task $t): bool
     {
-        return $user->company_id === $task->company_id;
+        return $this->sameCompany($u, $t);
+    }
+    
+    public function update(User $u, Task $t): bool
+    {
+        return $this->sameCompany($u, $t);
+    }
+
+    public function delete(User $u, Task $t): bool
+    {
+        return $this->sameCompany($u, $t);
+    }
+
+    public function complete(User $u, Task $t): bool
+    {
+        return $this->sameCompany($u, $t);
     }
 }

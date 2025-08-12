@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Task;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class TaskUpdateRequest extends FormRequest
 {
@@ -13,6 +14,8 @@ class TaskUpdateRequest extends FormRequest
      */
     public function authorize()
     {
+        $task = $this->route('task');
+        Gate::forUser($this->user())->authorize('update', $task);
         return true;
     }
 

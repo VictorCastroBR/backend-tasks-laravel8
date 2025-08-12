@@ -29,6 +29,9 @@ Route::prefix('auth')->group(function () {
 Route::middleware('auth:api')->prefix('/company')->group(function () {
     Route::get('/users', [CompanyUserController::class, 'index']);
     Route::post('/users', [CompanyUserController::class, 'store']);
+    Route::get('/users/{user}', [CompanyUserController::class, 'show']);
+    Route::put('/users/{user}', [CompanyUserController::class, 'update']);
+    Route::put('/users/{user}/password', [CompanyUserController::class, 'updatePassword']);
 });
 
 Route::middleware('auth:api')->prefix('/tasks')->group(function () {
