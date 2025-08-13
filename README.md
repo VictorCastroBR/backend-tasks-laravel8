@@ -30,8 +30,8 @@ API REST para gerenciamento de tarefas com autenticação JWT, multiempresa e ex
 ## ⚙️ Instalação (Sem Docker)
 
 ```bash
-git clone 
-cd backend
+git clone https://github.com/VictorCastroBR/backend-tasks-laravel8.git
+cd backend backend-tasks-laravel8
 cp .env.example .env
 
 # Configurar .env (DB, JWT_SECRET, MAIL, etc.)
